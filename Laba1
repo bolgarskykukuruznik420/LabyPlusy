@@ -97,7 +97,6 @@ int main()
 				std::cin >> id;
 				if (id > studcount || id < 0)
 				{
-					std::cout << "wrong student id\n";
 					break;
 				}
 				Dekan.setRate(&arr[id]);
