@@ -1,24 +1,34 @@
 #include <iostream>
 #include <string.h>
 
-int ID = 0;
+static int ID = 0;
 
 class dekan;
 
 class student
 {
 	friend class dekan;
-private:
+	friend void getData(student&);
+protected:
 	int id;
 	std::string name;
 	int rate;
 public:
+	student()
+	{
+
+	}
+	student(int id_, std::string name_, int rate_)
+	{
+		id = id_;
+		name = name_;
+		rate = rate_;
+	}
 	~student()
 	{
 		std::cout << "destructor\n";
 	}
 	void input();
-	void getData();
 	friend dekan;
 
 };
@@ -29,9 +39,9 @@ public:
 	void setRate(student* arr);
 };
 
-void student::getData()
+void getData(student& obj)
 {
-	std::cout << "student id is " << id << " name is " << name << " Rate is "<< rate << std::endl;
+	std::cout << "student id : " << obj.id << "\n name : " << obj.name << "\n Rate : "<< obj.rate << std::endl;
 }
 void dekan::setRate(student*arr)
 {
@@ -63,14 +73,10 @@ void student::input()
 
 int main()
 {
-	int studcount;
-
-	std::cout << "Students count\n";
-	std::cin >> studcount;
+	const size_t studcount=2;
 
 	std::string name;
-	student* arr;
-	arr = new student[studcount];
+    student arr[studcount];
 
 	for (int i = 0; i < studcount; i++) 
 	{
@@ -78,7 +84,7 @@ int main()
 	}
 	for (int i = 0; i < studcount; i++) 
 	{
-		arr[i].getData();
+		getData(arr[i]);
 	}
 
 	dekan Dekan;
@@ -108,7 +114,7 @@ int main()
 		}
 	}
 	for (int i = 0; i < studcount; i++) {
-		arr[i].getData();
+		getData(arr[i]);
 	}
 
 
