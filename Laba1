@@ -1,0 +1,117 @@
+#include <iostream>
+#include <string.h>
+
+int ID = 0;
+
+class dekan;
+
+class student
+{
+	friend class dekan;
+private:
+	int id;
+	std::string name;
+	int rate;
+public:
+	~student()
+	{
+		std::cout << "destructor\n";
+	}
+	void input();
+	void getData();
+	friend dekan;
+
+};
+
+class dekan
+{
+public:
+	void setRate(student* arr);
+};
+
+void student::getData()
+{
+	std::cout << "student id is " << id << " name is " << name << " Rate is "<< rate << std::endl;
+}
+void dekan::setRate(student*arr)
+{
+	while (1)
+	{
+		std::cout << "Enter Rate of " << (*arr).name << "\n ";
+		int mark;
+		std::cin >> mark;
+		if (mark < 0 || mark>10)
+		{
+			std::cout << "Wrong mark" << std::endl;
+		}
+		else
+		{
+			(*arr).rate = mark;
+			break;
+		}
+
+	}
+}
+void student::input()
+{
+	std::cout << "Name: ";
+	std::cin >> name;
+	id = ID;
+	rate = 0;
+	ID++;
+}
+
+int main()
+{
+	int studcount;
+
+	std::cout << "Students count\n";
+	std::cin >> studcount;
+
+	std::string name;
+	student* arr;
+	arr = new student[studcount];
+
+	for (int i = 0; i < studcount; i++) 
+	{
+		arr[i].input();
+	}
+	for (int i = 0; i < studcount; i++) 
+	{
+		arr[i].getData();
+	}
+
+	dekan Dekan;
+
+	for (int i = 0; i < 1;)
+	{
+		std::cout << "type 1 if u want to set student rate or type enything else to quit\n";
+		int k;
+		std::cin >> k;
+		if (k == 1)
+		{
+			for (int i = 0; i < 1;)
+			{
+				std::cout << "Enter id of student you want to set rate or type enything to quit" << std::endl;
+				int id;
+				std::cin >> id;
+				if (id > studcount || id < 0)
+				{
+					std::cout << "wrong student id\n";
+					break;
+				}
+				Dekan.setRate(&arr[id]);
+			}
+		}
+		else
+		{
+			break;
+		}
+	}
+	for (int i = 0; i < studcount; i++) {
+		arr[i].getData();
+	}
+
+
+	return 0;
+}
